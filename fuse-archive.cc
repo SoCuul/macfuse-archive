@@ -2575,7 +2575,8 @@ int GetAttr(const char* const path,
 int GetXattr(const char* const path,
              const char* const xattr_name,
              char* const dst_ptr,
-             size_t const dst_len) {
+             size_t const dst_len,
+             uint32_t position) {
   assert(path);
   assert(xattr_name);
 

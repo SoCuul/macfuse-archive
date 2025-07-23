@@ -1,22 +1,19 @@
 PROJECT = fuse-archive
 PKG_CONFIG ?= pkg-config
 
-FUSE_MAJOR_VERSION ?= 3
+FUSE_MAJOR_VERSION ?= 2
 
 ifeq ($(FUSE_MAJOR_VERSION), 3)
-DEPS = fuse3
 CXXFLAGS += -DFUSE_USE_VERSION=30
 else ifeq ($(FUSE_MAJOR_VERSION), 2)
-DEPS = fuse
 CXXFLAGS += -DFUSE_USE_VERSION=26
 endif
 
-DEPS += libarchive
 
-CXXFLAGS += $(shell $(PKG_CONFIG) --cflags $(DEPS))
-LDFLAGS += $(shell $(PKG_CONFIG) --libs $(DEPS))
+CXXFLAGS += -I/usr/local/include/fuse -I/opt/homebrew/opt/libarchive/include -I/opt/homebrew/opt/boost/include
+LDFLAGS += -rpath /usr/local/lib -L/usr/local/lib -L/opt/homebrew/opt/boost/lib -lfuse-t -larchive
 STD := c++20
-CXXFLAGS += -std=$(STD) -Wall -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter
+CXXFLAGS += -std=$(STD) -Wall -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter -Wno-nullability-extension
 CXXFLAGS += -D_FILE_OFFSET_BITS=64
 
 ifeq ($(DEBUG), 1)
