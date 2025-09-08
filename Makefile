@@ -11,13 +11,12 @@ DEPS = fuse
 CXXFLAGS += -DFUSE_USE_VERSION=26
 endif
 
-DEPS += libarchive
-
-CXXFLAGS += $(shell $(PKG_CONFIG) --cflags $(DEPS))
-LDFLAGS += $(shell $(PKG_CONFIG) --libs $(DEPS))
+CXXFLAGS += $(shell $(PKG_CONFIG) --cflags $(DEPS)) -I/opt/homebrew/opt/libarchive/include -I/opt/homebrew/opt/boost/include
+LDFLAGS += $(shell $(PKG_CONFIG) --libs $(DEPS)) -L/opt/homebrew/opt/boost/lib -larchive
 STD := c++20
 CXXFLAGS += -std=$(STD) -Wall -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter
 CXXFLAGS += -D_FILE_OFFSET_BITS=64
+CXXFLAGS += -std=gnu++20 -DFUSE_DARWIN_ENABLE_EXTENSIONS=0
 
 ifeq ($(DEBUG), 1)
 CXXFLAGS += -O0 -g

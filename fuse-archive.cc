@@ -2585,8 +2585,7 @@ int GetXattr(const char* const path,
              const char* const xattr_name,
              char* const dst_ptr,
 #ifdef __APPLE__
-             size_t const dst_len,
-             uint32_t) {
+             size_t const dst_len) {
 #else
              size_t const dst_len) {
 #endif
